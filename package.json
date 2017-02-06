@@ -1,0 +1,15 @@
+{
+  "name": "godeye",
+  "version": "1.0.0",
+  "description": "前端页面的监控统计脚本",
+  "main": "godEye.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "author": "feng_013",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^2.2.1"
+  }
+}

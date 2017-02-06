@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>监控统计demo</title>
+    <script>
+        //页面开始时间
+        window.__start_time = new Date().getTime();
+    </script>
+</head>
+<body>
+<script>
+    //页面ready时间
+    window.__ready_time = new Date().getTime();
+    //页面的统计KEY
+    window.__page_id = 'demo';
+</script>
+<script src="dist/godEye.js"></script>
+<!--
+//页面进入的统计,
+//在调用 GodEye.init之后发出,如果有window.__page_id则会默认初始化,可用于计算PV/UV
+//pt:刚进入页面时的一个时间戳,可以标记当次的访问,后续的所有日志都会带着这个时间戳
+//at:action触发的时间,用这个排序可以知道本次进入页面做了些什么事情
+//pageId: 当前页面的标识
+//eg: action=view&_bt=1486207495082&rf=-1&sc=1440*829*2&pt=1486207495081&at=1486207495083&pageId=demo
+
+
+//页面性能统计,页面onload之后发出
+//依赖: window.__start_time  window.__ready_time
+//GodEye.getEye('speed').add('key') 增加一个新的计时
+//action=speed&_bt=1486207495078&ready=0&load=27&pt=1486207495081&at=1486207495105&pageId=demo
+
+-->
+<script>
+    //新建任意一个分组统计,在log之前可在任意地方getEye
+    var demo = GodEye.getEye('demo'); //action:demo
+    demo.set('key', 'value'); //设置一个值
+
+    var demo2 = GodEye.getEye('demo');
+    demo2.add('time', new Date().getTime()); //计算时间差
+
+    var demo3 = GodEye.getEye('demo');
+    demo3.log();
+    //action=demo&_bt=1486207449786&key=value&time=1&pt=1486207449783&at=1486207449786&pageId=demo
+</script>
+<script>
+    //分组统计属性,记录在QN621中,有效期1年
+    //格式 a=1&b=2&c=3, 后续流程日志要一直带着这个cookie, 后续通过这个来对a,b,c进行不同的分组统计
+    GodEye.AB.set('aa', 1);
+    GodEye.AB.set('a2a', 'asdf');
+    GodEye.AB.set('a5a');
+    GodEye.AB.set('a51a', 0);
+    GodEye.AB.set('a51wewea', null);
+    console.log(document.cookie);  //QN621=a2a%3Dasdf%26a51a%3D0%26fr%3D1234%26aa%3D1
+    GodEye.AB.del('aa'); //删除一个分组
+    console.log(document.cookie);  //QN621=a2a%3Dasdf%26a51a%3D0%26fr%3D1234
+</script>
+</body>
+</html>
